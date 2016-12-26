@@ -5,7 +5,7 @@ $scriptPath = $args[2]
 Add-Type -Path (Join-Path -Path (Get-Item -Path ".\" -Verbose).FullName -ChildPath 'DbUp.dll')
 
 $dbUp = [DbUp.DeployChanges]::To
-$dbUp = [SqlServerExtensions]::SqlDatabase($dbUp, "server=$env:serverName;database=KbcList;Trusted_Connection=Yes;Connection Timeout=120;")
+$dbUp = [SqlServerExtensions]::SqlDatabase($dbUp, $env:connection_string)
 $dbUp = [StandardExtensions]::WithScriptsFromFileSystem($dbUp, "C:\Work\KanbanCore\scripts\files")
 $dbUp = [SqlServerExtensions]::JournalToSqlTable($dbUp, 'dbo', 'SchemaVersion')
 $dbUp = [StandardExtensions]::LogToConsole($dbUp)
